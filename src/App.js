@@ -157,9 +157,9 @@ const App = () => {
 
   const renderNotConnectedContainer = () => (
     <div className="connect-wallet-container">
-      <button onClick={connectWallet} className="cta-button connect-wallet-button">
+      {/* <button onClick={connectWallet} className="cta-button connect-wallet-button">
         Connect Wallet
-      </button>
+      </button> */}
       <ConnectButton label="Connect Wallet To Prove Status" showBalance={{
     smallScreen: false,
     largeScreen: true,
@@ -168,17 +168,19 @@ const App = () => {
   );
 
   const renderDaoPage = () => {
-    if (network !== "Polygon Mumbai Testnet") {
-      return (
-        <div className="connect-wallet-container">
-          <h2>Please switch to Polygon Mumbai Testnet</h2>
-          {/* This button will call our switch network function */}
-          <button className="cta-button mint-button" onClick={switchNetwork}>
-            Click here to switch
-          </button>
-        </div>
-      );
-    }
+    // console.log("isMember", isMember);
+    // console.log("network", network);
+    // if (network !== "Polygon Mumbai Testnet") {
+    //   return (
+    //     <div className="connect-wallet-container">
+    //       <h2>Please switch to Polygon Mumbai Testnet</h2>
+    //       {/* This button will call our switch network function */}
+    //       <button className="cta-button mint-button" onClick={switchNetwork}>
+    //         Click here to switch
+    //       </button>
+    //     </div>
+    //   );
+    // }
     return (
       <div>
         {isMember === false ? (
