@@ -14,7 +14,7 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, WagmiConfig, } from 'wagmi';
 import {
   mainnet,
   polygon,
@@ -24,14 +24,15 @@ import {
   zora,
   scrollTestnet,
   polygonMumbai,
-  arbitrumGoerli
+  arbitrumGoerli,
+  scrollSepolia
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
 
 const { chains, publicClient } = configureChains(
-  [scrollTestnet, polygonMumbai, arbitrumGoerli],
+  [scrollTestnet, polygonMumbai, arbitrumGoerli, scrollSepolia],
   [
     alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
     publicProvider()
@@ -50,7 +51,7 @@ const wagmiConfig = createConfig({
   publicClient
 })
 
-const CRICKET_DAO_NFT_CONTRACT = "0x57fC8987532d5Fa2cb5Dd7De4Ac550e4E0aAcAFa";
+const CRICKET_DAO_NFT_CONTRACT = "0x7F2C5142F7dCE3Fc992B398921f837Ed052405C3";
 
 const App = () => {
   const [network, setNetwork] = useState("");
@@ -136,6 +137,7 @@ const App = () => {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
+        console.log("Signer", signer);
         const contract = new ethers.Contract(CRICKET_DAO_NFT_CONTRACT, CricketDaoNFT_ABI.abi, signer);
 
         let txn = await contract.claim(id);
@@ -185,6 +187,10 @@ const App = () => {
       <div>
         {isMember === false ? (
           <div>
+            <ConnectButton label="Connect Wallet To Prove Status" showBalance={{
+    smallScreen: false,
+    largeScreen: true,
+  }} />
             <h2>You don't have any Membership NFT !!!</h2>
             <input type="text" onChange={(e) => setNsftId(e.target.value)} />
             <button className="cta-button connect-wallet-button" onClick={() => mint(nftId)}>
@@ -253,7 +259,11 @@ const App = () => {
           <header>
             <div className="left">
               <p className="title">🏏Cricket DAO</p>
-              <p className="subtitle">A DAO Where We Live & Breathe Cricket!</p>
+              <p className="subtitle">A DAO Where We Live & Breathe Cricket!</p><ConnectButton label="Connect Wallet To Prove Status" showBalance={{
+    smallScreen: false,
+    largeScreen: true,
+  }} />
+
             </div>
             {/* Display a logo and wallet connection status*/}
             <div className="right">
